@@ -6,4 +6,8 @@
     <string name="first_name">First name: </string>
     <string name="last_name">Last name: </string>
     <string name="employee_number">Employee no: </string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="sign_out">Sign out</string>
+
 </resources>

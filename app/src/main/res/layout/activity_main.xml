@@ -9,7 +9,15 @@
     android:background="?attr/backgroundColor"
     android:orientation="vertical">
 
-    <include layout="@layout/appbar"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorAccent"
+        app:title="@string/app_name"
+        app:titleTextColor="?attr/textColor"
+        android:theme="@style/AppTheme"
+        android:elevation="4dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_margin="15dp"
