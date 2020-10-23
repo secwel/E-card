@@ -9,5 +9,6 @@
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
     <string name="sign_out">Sign out</string>
+    <string name="my_service_description">Placeholder description</string>
 
 </resources>
