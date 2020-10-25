@@ -44,6 +44,13 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    // Fix for error: "com.android.tools.r8.a: Invoke-customs are only supported starting with Android O (--min-api 26)" that i found on Stackoverflow
+    android {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
 }
 repositories {
     mavenCentral()

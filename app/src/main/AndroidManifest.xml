@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.NFC" />
 
+    <!--    <uses-sdk android:minSdkVersion="10"/>-->
+    <uses-feature android:name="android.hardware.NFC" android:required="true" />
+    <uses-feature android:name="android.hardware.nfc.hce" android:required="true"/>
+
     <application
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="true"
@@ -25,21 +29,20 @@
         </activity>
         
         <service
-            android:name=".NFC.MyHCEService"
+            android:name=".NFC.HostCardEmulatorService"
+            android:exported="true"
             android:permission="android.permission.BIND_NFC_SERVICE">
             <intent-filter>
-                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action
+                    android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE"/>
             </intent-filter>
-            <meta-data android:name="android.nfc.cardemulation.host_apdu_service"
-                android:resource="@xml/my_host_metadata"/>
-
+            <meta-data
+                android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/apduservice"/>
         </service>
     </application>
 
-<!--    <uses-sdk android:minSdkVersion="10"/>-->
-    <uses-feature android:name="android.hardware.NFC" android:required="true" />
-    <uses-feature android:name="android.hardware.nfc.hce" android:required="true"/>
+
 
     
 

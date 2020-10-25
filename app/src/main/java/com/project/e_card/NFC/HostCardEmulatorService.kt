@@ -4,7 +4,7 @@ import android.nfc.cardemulation.HostApduService
 import android.os.Bundle
 import android.util.Log
 
-class MyHCEService : HostApduService() {
+class HostCardEmulatorService : HostApduService() {
 
     companion object {
         val TAG = "Host Card Emulator"
@@ -25,6 +25,7 @@ class MyHCEService : HostApduService() {
 
 
     //    Where we process the data(APDU) from the reader (look at the APDU command structure to understand these parameters)
+    //    commandApdu is the Apdu command received from the Reader
 
     override fun processCommandApdu(commandApdu: ByteArray?, extras: Bundle?): ByteArray {
         if (commandApdu == null){
@@ -47,9 +48,18 @@ class MyHCEService : HostApduService() {
             return Utils.hexStringToByteArray(STATUS_FAILED)
         }
 
+        //here we should implement the Response message
+
+
+
+
+
+
+
 
 
     }
+
 
 
 }
