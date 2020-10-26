@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         lastName = findViewById(R.id.lastName)
         employeeNumber = findViewById(R.id.employeeNumber)
 
+
+
     }
     /**
      * Method used to set the options menu in the tool bar
@@ -66,6 +68,12 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+
+    }
+
     /**
      * Restart application to the current screen
      */
@@ -81,6 +89,8 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         moveTaskToBack(true)
     }
+
+
 
     companion object {
         @JvmField
