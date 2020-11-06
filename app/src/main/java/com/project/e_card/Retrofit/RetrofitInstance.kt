@@ -13,7 +13,7 @@ import retrofit2.http.POST
 interface ApiInterface {
     @Headers("Content-Type:application/json")
     @POST("auth_tokens")
-    fun signin(@Body info: SignInBody): retrofit2.Call<ResponseBody>
+    fun signIn(@Body info: SignInBody): retrofit2.Call<ResponseBody>
 
 }
 class RetrofitInstance {

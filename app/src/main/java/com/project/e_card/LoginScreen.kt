@@ -42,10 +42,10 @@ class LoginScreen : AppCompatActivity() {
                     Toast.makeText(this, "Password is required!", Toast.LENGTH_SHORT).show()
                 } */
                 else -> {
-                     fun signin(first_name: String, employee_id: Int){
+                     fun signIn(first_name: String, employee_id: Int){
                         val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
                         val signInInfo = SignInBody(first_name, employee_id)
-                        retIn.signin(signInInfo).enqueue(object: Callback<ResponseBody> {
+                        retIn.signIn(signInInfo).enqueue(object: Callback<ResponseBody> {
                              override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 Toast.makeText(
                                         this@LoginScreen,
