@@ -6,7 +6,14 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import kotlin.reflect.KClass
+import com.project.e_card.Retrofit.ApiInterface
+import com.project.e_card.Retrofit.RetrofitInstance
+import com.project.e_card.Retrofit.SignInBody
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class LoginScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,9 +23,7 @@ class LoginScreen : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.buttonLogin)
         val employeeEmail = findViewById<EditText>(R.id.employeeEmail)
         val employeeNumber = findViewById<EditText>(R.id.employeeNumberInput)
-        val employeePassword = findViewById<EditText>(R.id.employeePassword)
-
-
+        /* val employeePassword = findViewById<EditText>(R.id.employeePassword) */
 
         loginButton.setOnClickListener{
             val intent = Intent(this,MainActivity::class.java)
@@ -32,15 +37,36 @@ class LoginScreen : AppCompatActivity() {
                     employeeNumber.error = "You must provide employee number!"
                     Toast.makeText(this, "Employee number is required!", Toast.LENGTH_SHORT).show()
                 }
-                employeePassword.text.toString().trim().isEmpty() -> {
+                /* employeePassword.text.toString().trim().isEmpty() -> {
                     employeePassword.error = "You must provide a password!"
                     Toast.makeText(this, "Password is required!", Toast.LENGTH_SHORT).show()
+                } */
+                else -> {
+                     fun signin(first_name: String, employee_id: Int){
+                        val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
+                        val signInInfo = SignInBody(first_name, employee_id)
+                        retIn.signin(signInInfo).enqueue(object: Callback<ResponseBody> {
+                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                Toast.makeText(
+                                        this@LoginScreen,
+                                        t.message,
+                                        Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(this@LoginScreen, "Login success!", Toast.LENGTH_SHORT).show()
+                                    startActivity(intent)
+                                } else {
+                                    Toast.makeText(this@LoginScreen, "Login failed!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        })
+                    }
                 }
-                else -> startActivity(intent)
             }
         }
     }
-
-
 }
+
 

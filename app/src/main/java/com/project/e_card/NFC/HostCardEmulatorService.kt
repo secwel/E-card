@@ -22,8 +22,6 @@ class HostCardEmulatorService : HostApduService() {
         Log.d(TAG, "Deactivated: " + reason)
     }
 
-
-
     //    Where we process the data(APDU) from the reader (look at the APDU command structure to understand these parameters)
     //    commandApdu is the Apdu command received from the Reader
 
@@ -47,19 +45,6 @@ class HostCardEmulatorService : HostApduService() {
         else{
             return Utils.hexStringToByteArray(STATUS_FAILED)
         }
-
         //here we should implement the Response message
-
-
-
-
-
-
-
-
-
     }
-
-
-
 }
