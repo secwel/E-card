@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
         lastName = findViewById(R.id.lastName)
         employeeNumber = findViewById(R.id.employeeNumber)
 
-
-
     }
     /**
      * Method used to set the options menu in the tool bar

@@ -21,7 +21,7 @@ class LoginScreen : AppCompatActivity() {
         setContentView(R.layout.activity_login_screen)
         
         val loginButton = findViewById<Button>(R.id.buttonLogin)
-        val employeeEmail = findViewById<EditText>(R.id.employeeEmail)
+        val firstName = findViewById<EditText>(R.id.employeeName)
         val employeeNumber = findViewById<EditText>(R.id.employeeNumberInput)
         /* val employeePassword = findViewById<EditText>(R.id.employeePassword) */
 
@@ -29,9 +29,9 @@ class LoginScreen : AppCompatActivity() {
             val intent = Intent(this,MainActivity::class.java)
 
             when {
-                employeeEmail.text.toString().trim().isEmpty() -> {
-                    employeeEmail.error = "You must provide an email!"
-                    Toast.makeText(this, "Email is required!", Toast.LENGTH_SHORT).show()
+                firstName.text.toString().trim().isEmpty() -> {
+                    firstName.error = "You must provide a name!"
+                    Toast.makeText(this, "Name is required!", Toast.LENGTH_SHORT).show()
                 }
                 employeeNumber.text.toString().trim().isEmpty() -> {
                     employeeNumber.error = "You must provide employee number!"
@@ -42,10 +42,10 @@ class LoginScreen : AppCompatActivity() {
                     Toast.makeText(this, "Password is required!", Toast.LENGTH_SHORT).show()
                 } */
                 else -> {
-                     fun signIn(first_name: String, employee_id: Int){
-                        val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
+                     fun retLogin(first_name: String, employee_id: Int){
+                        val apiInterface = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
                         val signInInfo = SignInBody(first_name, employee_id)
-                        retIn.signIn(signInInfo).enqueue(object: Callback<ResponseBody> {
+                        apiInterface.signIn(signInInfo).enqueue(object: Callback<ResponseBody> {
                              override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 Toast.makeText(
                                         this@LoginScreen,
@@ -53,6 +53,7 @@ class LoginScreen : AppCompatActivity() {
                                         Toast.LENGTH_SHORT
                                 ).show()
                             }
+
                             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                                 if (response.code() == 200) {
                                     Toast.makeText(this@LoginScreen, "Login success!", Toast.LENGTH_SHORT).show()

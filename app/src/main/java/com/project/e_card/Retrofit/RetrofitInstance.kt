@@ -27,6 +27,7 @@ class RetrofitInstance {
         private val client: OkHttpClient = OkHttpClient.Builder().apply {
             this.addInterceptor(interceptor)
         }.build()
+
         fun getRetrofitInstance(): Retrofit {
             return Retrofit.Builder()
                     .baseUrl(BASE_URL)
