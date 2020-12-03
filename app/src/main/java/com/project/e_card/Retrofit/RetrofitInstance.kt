@@ -1,21 +1,14 @@
 package com.project.e_card.Retrofit
 
-import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
-
+import retrofit2.Call
+import retrofit2.http.GET
 
 interface ApiInterface {
-    @Headers("Content-Type:application/json")
-    @POST("auth_tokens")
-    fun signIn(@Body info: SignInBody): retrofit2.Call<ResponseBody>
-
+    @GET("/detail/1/?format=json") // This has to be something specific for our project
+    fun getCredentials(): Call<EmployeeJSON>
 }
+
+/*
 class RetrofitInstance {
     companion object {
         private const val BASE_URL: String = "http://34.107.71.133:8000" //idk what the Base URL is for our project might need some editing
@@ -32,8 +25,8 @@ class RetrofitInstance {
             return Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(MoshiConverterFactory.create())
                     .build()
         }
     }
-}
+} */

@@ -7,19 +7,26 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.project.e_card.Retrofit.ApiInterface
-import com.project.e_card.Retrofit.RetrofitInstance
-import com.project.e_card.Retrofit.SignInBody
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.project.e_card.Retrofit.EmployeeJSON
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.*
+import retrofit2.converter.moshi.MoshiConverterFactory
+import java.lang.Exception
 
+// private var TAG = "LoginActivity"
+const val BASE_URL = "http://34.107.71.133:8000"
 
 class LoginScreen : AppCompatActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_screen)
-        
+
         val loginButton = findViewById<Button>(R.id.buttonLogin)
         val firstName = findViewById<EditText>(R.id.employeeName)
         val employeeNumber = findViewById<EditText>(R.id.employeeNumberInput)
@@ -27,7 +34,7 @@ class LoginScreen : AppCompatActivity() {
 
         loginButton.setOnClickListener{
             val intent = Intent(this,MainActivity::class.java)
-
+/*
             when {
                 firstName.text.toString().trim().isEmpty() -> {
                     firstName.error = "You must provide a name!"
@@ -42,32 +49,75 @@ class LoginScreen : AppCompatActivity() {
                     Toast.makeText(this, "Password is required!", Toast.LENGTH_SHORT).show()
                 } */
                 else -> {
-                     fun retLogin(first_name: String, employee_id: Int){
-                        val apiInterface = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
-                        val signInInfo = SignInBody(first_name, employee_id)
-                        apiInterface.signIn(signInInfo).enqueue(object: Callback<ResponseBody> {
-                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Toast.makeText(
-                                        this@LoginScreen,
-                                        t.message,
-                                        Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                     retLogin()
+                     startActivity(intent)
+                }
+            } */
 
-                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                                if (response.code() == 200) {
-                                    Toast.makeText(this@LoginScreen, "Login success!", Toast.LENGTH_SHORT).show()
-                                    startActivity(intent)
-                                } else {
-                                    Toast.makeText(this@LoginScreen, "Login failed!", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        })
+            // retLogin()
+            val api = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .build()
+                    .create(ApiInterface::class.java)
+
+            GlobalScope.launch(Dispatchers.IO) {
+                try {
+                    val response = api.getCredentials().awaitResponse()
+                    if (response.isSuccessful) {
+
+                        val toast = Toast.makeText(this@LoginScreen, "working", Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main){
+                        val toastgeneral = Toast.makeText(this@LoginScreen, "not working", Toast.LENGTH_LONG)
+                        toastgeneral.show()
                     }
                 }
-            }
+            startActivity(intent)
         }
     }
-}
+
+    fun retLogin(){
+
+
+
+
+
+/*
+
+
+
+
+
+        val apiInterface = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
+        val signInInfo = SignInBody(first_name, employee_id)
+        apiInterface.signIn(signInInfo).enqueue(object: Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Toast.makeText(
+                        this@LoginScreen,
+                        t.message,
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.code() == 200) {
+                    Toast.makeText(this@LoginScreen, "Login success!", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    Toast.makeText(this@LoginScreen, "Login failed!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+
+
+
+ */
+
+}}}
 
 
