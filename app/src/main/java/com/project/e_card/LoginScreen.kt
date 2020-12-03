@@ -1,12 +1,15 @@
 package com.project.e_card
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.project.e_card.Retrofit.ApiInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,7 +17,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.*
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.lang.Exception
 
 private var TAG = "LoginActivity"
 const val BASE_URL = "http://34.107.71.133:8000"
@@ -47,12 +49,12 @@ class LoginScreen : AppCompatActivity() {
                     Toast.makeText(this, "Password is required!", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    retLogin(intent, firstNameField.text.toString(), employeeNumberField.text.toString().toInt(), employeePasswordField.text.toString())
+                    retLogin(intent, firstNameField.text.toString(), employeeNumberField.text.toString().toInt(), employeePasswordField.text.toString(), firstNameField, employeeNumberField, employeePasswordField)
                 }
             }
         }
     }
-    fun retLogin(intent: Intent, firstName: String, employeeNumber: Int, employeePassword: String) {
+    private fun retLogin(intent: Intent, firstNameField: String, employeeNumberField: Int, employeePasswordField: String, firstNameEditText: EditText, employeeNumberEditText: EditText, employeePasswordEditText: EditText) {
         val api = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
@@ -63,14 +65,28 @@ class LoginScreen : AppCompatActivity() {
             try {
                 val response = api.getCredentials().awaitResponse()
                 Log.d(TAG, response.code().toString())
+                var firstName: String
+                var employeeNumber: Int
+                var password: String
                 if (response.isSuccessful) {
-                    val firstName = response.body()!!.name
-                    val employeeNumber = response.body()!!.employee_number
-                    val password = response.body()!!.password
-                    if (firstName.equals(firstName) && employeeNumber.equals(employeeNumber) && password.equals(employeePassword)) {
-                        startActivity(intent)
-                    } else {
-                        Log.d(TAG, "error in your credentials!")
+                    for (i in 0..response.body()!!.size) {
+                        firstName = response.body()!![i].name
+                        employeeNumber = response.body()!![i].employee_number
+                        password = response.body()!![i].password
+
+                        if (firstName == firstNameField && employeeNumber == employeeNumberField && password == employeePasswordField) {
+                            startActivity(intent)
+                        } else {
+                            runOnUiThread(kotlinx.coroutines.Runnable {
+                                kotlin.run {
+                                    when {
+                                        firstName != firstNameField -> firstNameEditText.error = "Incorrect first name!"
+                                        employeeNumber != employeeNumberField -> employeeNumberEditText.error = "Incorrect employee number!"
+                                        password != employeePasswordField -> employeePasswordEditText.error = "Incorrect password!"
+                                    }
+                                }
+                            })
+                        }
                     }
                 }
             } catch (e: Exception) {
