@@ -1,12 +1,14 @@
 package com.project.e_card.Retrofit
 
+import android.provider.ContactsContract
+import java.util.*
+
 data class EmployeeJSON(
-        val unique_id: Int,
-        val first_name: String,
+        val name: String,
         val last_name: String,
-        val employee_id: Int,
-        val email: String,
+        val employee_number: Int,
         val password: String,
-        val rfid_tag: String,
+        val email: String,
+        val UID: String,
         val access_level: Int
 )
