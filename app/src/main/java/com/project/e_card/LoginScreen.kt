@@ -3,6 +3,7 @@ package com.project.e_card
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -16,7 +17,7 @@ import retrofit2.*
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.lang.Exception
 
-// private var TAG = "LoginActivity"
+private var TAG = "LoginActivity"
 const val BASE_URL = "http://34.107.71.133:8000"
 
 class LoginScreen : AppCompatActivity() {
@@ -64,18 +65,16 @@ class LoginScreen : AppCompatActivity() {
             GlobalScope.launch(Dispatchers.IO) {
                 try {
                     val response = api.getCredentials().awaitResponse()
+                    Log.d(TAG, response.code().toString())
                     if (response.isSuccessful) {
-
-                        val toast = Toast.makeText(this@LoginScreen, "working", Toast.LENGTH_SHORT)
-                        toast.show()
+                        startActivity(intent)
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main){
-                        val toastgeneral = Toast.makeText(this@LoginScreen, "not working", Toast.LENGTH_LONG)
-                        toastgeneral.show()
+                        Log.d(TAG, e.toString())
                     }
                 }
-            startActivity(intent)
+
         }
     }
 
