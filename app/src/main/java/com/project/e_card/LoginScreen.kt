@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.project.e_card.Retrofit.ApiInterface
+import com.project.e_card.Retrofit.EmployeeData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -65,16 +66,25 @@ class LoginScreen : AppCompatActivity() {
             try {
                 val response = api.getCredentials().awaitResponse()
                 Log.d(TAG, response.code().toString())
-                var firstName: String
-                var employeeNumber: Int
-                var password: String
                 if (response.isSuccessful) {
                     for (i in 0..response.body()!!.size) {
-                        firstName = response.body()!![i].name
-                        employeeNumber = response.body()!![i].employee_number
-                        password = response.body()!![i].password
+                        val firstName = response.body()!![i].name
+                        val lastName = response.body()!![i].last_name
+                        val employeeNumber = response.body()!![i].employee_number
+                        val password = response.body()!![i].password
+                        val email = response.body()!![i].email
+                        val uid = response.body()!![i].UID
+                        val accessLevel = response.body()!![i].access_level
 
                         if (firstName == firstNameField && employeeNumber == employeeNumberField && password == employeePasswordField) {
+
+                            //These three lines create an instance of the EmployeeData class and calls its makeObject method
+                            val currentEmployeeData = EmployeeData()
+                            currentEmployeeData.makeObject(firstName, lastName, employeeNumber, password, email, uid, accessLevel)
+
+                            //Just testing that the data actually gets there, uncomment if testing is needed
+                            //EmployeeData.printData()
+
                             startActivity(intent)
                         } else {
                             runOnUiThread(kotlinx.coroutines.Runnable {

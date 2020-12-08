@@ -1,8 +1,5 @@
 package com.project.e_card.Retrofit
 
-import android.provider.ContactsContract
-import java.util.*
-
 data class EmployeeJSON(
         val name: String,
         val last_name: String,
