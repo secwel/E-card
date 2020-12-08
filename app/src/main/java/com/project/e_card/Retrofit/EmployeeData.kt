@@ -29,4 +29,15 @@ class EmployeeData {
             println("$name $last_name $employee_number $password $email $UID $access_level")
         }
     }
+
+    // Instead of having a class with this alone
+    data class EmployeeJSON(
+            val name: String,
+            val last_name: String,
+            val employee_number: Int,
+            val password: String,
+            val email: String,
+            val UID: String,
+            val access_level: Int
+    )
 }
