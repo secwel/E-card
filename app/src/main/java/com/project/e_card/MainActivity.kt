@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import com.project.e_card.NFC.DataStoreUtils
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +24,11 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Prints out the devices unique AID. Resets when the app data is deleted
+        val dataStore = DataStoreUtils(this)
+        val uid = dataStore.getID()
+        println("This is the unique AID: $uid")
 
         toolBar = findViewById<Toolbar>(R.id.my_toolbar)
         setSupportActionBar(findViewById<View>(R.id.my_toolbar) as Toolbar?)
@@ -66,12 +72,6 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-
-    }
-
     /**
      * Restart application to the current screen
      */
@@ -87,8 +87,6 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         moveTaskToBack(true)
     }
-
-
 
     companion object {
         @JvmField

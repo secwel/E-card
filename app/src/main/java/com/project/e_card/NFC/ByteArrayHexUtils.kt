@@ -1,11 +1,11 @@
 package com.project.e_card.NFC
 
-class Utils {
+class ByteArrayHexUtils {
 
 //   These methods are here to convert between byte arrays and Hexadecimal Strings.
 
     companion object{
-        private val HEX_CHARS = "0123456789ABCDEF"
+        private const val HEX_CHARS = "0123456789ABCDEF"
         fun hexStringToByteArray(data: String) : ByteArray {
 
             val result = ByteArray(data.length / 2)
@@ -15,11 +15,11 @@ class Utils {
                 val secondIndex = HEX_CHARS.indexOf(data[i + 1])
 
                 val octet = firstIndex.shl(4).or(secondIndex)
-                result.set(i.shr(1), octet.toByte())
+                result[i.shr(1)] = octet.toByte()
             }
-
             return result
         }
+
         private val HEX_CHARS_ARRAY = "0123456789ABCDEF".toCharArray()
         fun toHex(byteArray: ByteArray) : String {
             val result = StringBuffer()
@@ -31,10 +31,8 @@ class Utils {
                 result.append(HEX_CHARS_ARRAY[firstIndex])
                 result.append(HEX_CHARS_ARRAY[secondIndex])
             }
-
             return result.toString()
         }
-
 
     }
 

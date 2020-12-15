@@ -2,7 +2,7 @@ package com.project.e_card.Retrofit
 
 class EmployeeData {
 
-    //Makes sure the data is passed into the EmployeeObject
+    //Passes the current employees data into the EmployeeObject
     fun makeObject(fName: String, lName: String, eNumber: Int, passwrd: String, mail: String, uid: String, aLevel: Int): EmployeeObj {
         name = fName
         last_name = lName

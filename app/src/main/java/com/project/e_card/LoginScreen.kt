@@ -1,6 +1,7 @@
 package com.project.e_card
 
 import android.content.Intent
+import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.project.e_card.NFC.DataStoreUtils
+import com.project.e_card.NFC.NFCDialogue
 import com.project.e_card.Retrofit.ApiInterface
 import com.project.e_card.Retrofit.EmployeeData
 import kotlinx.coroutines.Dispatchers
@@ -28,10 +31,24 @@ class LoginScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_screen)
 
+        // Prints out the devices unique AID. Resets when the app data is deleted
+        val dataStore = DataStoreUtils(this)
+        val uid = dataStore.getID()
+        println("This is the AID: $uid")
+
         val loginButton = findViewById<Button>(R.id.buttonLogin)
         val firstNameField = findViewById<EditText>(R.id.employeeName)
         val employeeNumberField = findViewById<EditText>(R.id.employeeNumberInput)
         val employeePasswordField = findViewById<EditText>(R.id.employeePassword)
+
+        val nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        if (nfcAdapter != null) {
+            if (!nfcAdapter.isEnabled) {
+                NFCDialogue(this).showNFCDisabled()
+            }
+        } else{
+            NFCDialogue(this).showNFCUnsupported()
+        }
 
         loginButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

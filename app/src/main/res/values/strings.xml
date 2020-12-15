@@ -9,6 +9,13 @@
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
     <string name="sign_out">Sign out</string>
-    <string name="my_service_description">Placeholder description</string>
+    <string name="my_service_description">Some service description</string>
+    <string name="my_aid_description">Some AID description</string>
+    <string name="id_label" translatable="false">ID:</string>
+    <string name="nfc_disabled">NFC is disabled. Do you want to enable it?</string>
+    <string name="dialogue_yes">Yes</string>
+    <string name="dialogue_no">No</string>
+    <string name="dialogue_ok">Ok</string>
+    <string name="nfc_unsupported">Device does not support NFC? :-(</string>
 
 </resources>
