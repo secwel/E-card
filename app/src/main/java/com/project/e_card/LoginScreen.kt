@@ -31,11 +31,6 @@ class LoginScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_screen)
 
-        // Prints out the devices unique AID. Resets when the app data is deleted
-        val dataStore = DataStoreUtils(this)
-        val uid = dataStore.getID()
-        println("This is the AID: $uid")
-
         val loginButton = findViewById<Button>(R.id.buttonLogin)
         val firstNameField = findViewById<EditText>(R.id.employeeName)
         val employeeNumberField = findViewById<EditText>(R.id.employeeNumberInput)
@@ -72,6 +67,15 @@ class LoginScreen : AppCompatActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        val dataStore = DataStoreUtils(this)
+        val uid = dataStore.getID()
+        println("Current employees UID: $uid")
+
+    }
+
     private fun retLogin(intent: Intent, firstNameField: String, employeeNumberField: Int, employeePasswordField: String, firstNameEditText: EditText, employeeNumberEditText: EditText, employeePasswordEditText: EditText) {
         val api = Retrofit.Builder()
                 .baseUrl(BASE_URL)

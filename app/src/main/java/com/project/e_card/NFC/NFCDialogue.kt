@@ -2,7 +2,6 @@ package com.project.e_card.NFC
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.provider.Settings
 import com.project.e_card.R
@@ -15,16 +14,16 @@ class NFCDialogue(var context: Context) {
                 .setCancelable(false)
 
                 // positive button text and action
-                .setPositiveButton(R.string.dialogue_yes, DialogInterface.OnClickListener {
-                    dialog, id -> dialog.dismiss()
+                .setPositiveButton(R.string.dialogue_yes) { dialog, _ ->
+                    dialog.dismiss()
                     val intent = Intent(Settings.ACTION_NFC_SETTINGS)
                     context.startActivity(intent)
-                })
+                }
 
                 // negative button text and action
-                .setNegativeButton(R.string.dialogue_no, DialogInterface.OnClickListener {
-                    dialog, id -> dialog.cancel()
-                })
+                .setNegativeButton(R.string.dialogue_no) { dialog, _ ->
+                    dialog.cancel()
+                }
         show()
     }
 
@@ -34,9 +33,9 @@ class NFCDialogue(var context: Context) {
                 .setCancelable(false)
 
                 // positive button text and action
-                .setPositiveButton(R.string.dialogue_ok, DialogInterface.OnClickListener {
-                    dialog, id -> dialog.dismiss()
-                })
+                .setPositiveButton(R.string.dialogue_ok) { dialog, _ ->
+                    dialog.dismiss()
+                }
         show()
     }
 

@@ -2,6 +2,7 @@ package com.project.e_card.NFC
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.project.e_card.Retrofit.EmployeeData
 import java.util.*
 
 class DataStoreUtils(context: Context) {
@@ -14,7 +15,8 @@ class DataStoreUtils(context: Context) {
     fun getID(): String {
         var uid = prefs!!.getString("uid", null)
         if (uid == null) {
-            uid = this.generateID()
+            uid = EmployeeData.UID!!
+            //uid = this.generateID()
             this.saveID(uid)
         }
         return uid

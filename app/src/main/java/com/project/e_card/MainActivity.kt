@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.project.e_card.NFC.DataStoreUtils
+import com.project.e_card.Retrofit.EmployeeData
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         // Prints out the devices unique AID. Resets when the app data is deleted
         val dataStore = DataStoreUtils(this)
         val uid = dataStore.getID()
-        println("This is the unique AID: $uid")
+        println("Current employees UID: $uid")
 
         toolBar = findViewById<Toolbar>(R.id.my_toolbar)
         setSupportActionBar(findViewById<View>(R.id.my_toolbar) as Toolbar?)
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         employeeNumber = findViewById(R.id.employeeNumber)
 
     }
+
     /**
      * Method used to set the options menu in the tool bar
      * @param menu
