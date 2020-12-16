@@ -85,40 +85,45 @@ class LoginScreen : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val response = api.getCredentials().awaitResponse()
+                val response = api.getUserData(employeeNumberField).awaitResponse()
                 Log.d(TAG, response.code().toString())
                 if (response.isSuccessful) {
-                    for (i in 0..response.body()!!.size) {
-                        val firstName = response.body()!![i].name
-                        val lastName = response.body()!![i].last_name
-                        val employeeNumber = response.body()!![i].employee_number
-                        val password = response.body()!![i].password
-                        val email = response.body()!![i].email
-                        val uid = response.body()!![i].UID
-                        val accessLevel = response.body()!![i].access_level
 
-                        if (firstName == firstNameField && employeeNumber == employeeNumberField && password == employeePasswordField) {
+                    val firstName = response.body()!!.name
+                    val lastName = response.body()!!.last_name
+                    val employeeNumber = response.body()!!.employee_number
+                    val password = response.body()!!.password
+                    val email = response.body()!!.email
+                    val uid = response.body()!!.UID
+                    val accessLevel = response.body()!!.access_level
 
-                            //These three lines create an instance of the EmployeeData class and calls its makeObject method
-                            val currentEmployeeData = EmployeeData()
-                            currentEmployeeData.makeObject(firstName, lastName, employeeNumber, password, email, uid, accessLevel)
+                    if (firstName == firstNameField && employeeNumber == employeeNumberField && password == employeePasswordField) {
 
-                            //Just testing that the data actually gets there, uncomment if testing is needed
-                            //EmployeeData.printData()
+                        //These three lines create an instance of the EmployeeData class and calls its makeObject method
+                        val currentEmployeeData = EmployeeData()
+                        currentEmployeeData.makeObject(firstName, lastName, employeeNumber, password, email, uid, accessLevel)
 
-                            startActivity(intent)
-                        } else {
-                            runOnUiThread(kotlinx.coroutines.Runnable {
-                                kotlin.run {
-                                    when {
-                                        firstName != firstNameField -> firstNameEditText.error = "Incorrect first name!"
-                                        employeeNumber != employeeNumberField -> employeeNumberEditText.error = "Incorrect employee number!"
-                                        password != employeePasswordField -> employeePasswordEditText.error = "Incorrect password!"
-                                    }
+                        //Just testing that the data actually gets there, uncomment if testing is needed
+                        //EmployeeData.printData()
+
+                        startActivity(intent)
+                    } else {
+                        runOnUiThread(kotlinx.coroutines.Runnable {
+                            kotlin.run {
+                                when {
+                                    firstName != firstNameField -> firstNameEditText.error = "Incorrect first name!"
+                                    employeeNumber != employeeNumberField -> employeeNumberEditText.error = "Incorrect employee number!"
+                                    password != employeePasswordField -> employeePasswordEditText.error = "Incorrect password!"
                                 }
-                            })
-                        }
+                            }
+                        })
                     }
+
+                    /*for (i in 0..response.body()!!.size) {
+
+                    // Loop for finding the correct user on the list after getting it to the device
+
+                    }*/
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
