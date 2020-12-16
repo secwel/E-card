@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
@@ -31,12 +30,21 @@ class MainActivity : AppCompatActivity() {
         val uid = dataStore.getID()
         println("Current employees UID: $uid")
 
+        val firstNameField = findViewById<TextView>(R.id.nameOnCard)
+        val lastNameField = findViewById<TextView>(R.id.lastNameOnCard)
+        val employeeNumberField = findViewById<TextView>(R.id.employeeNumberOnCard)
+
         toolBar = findViewById<Toolbar>(R.id.my_toolbar)
         setSupportActionBar(findViewById<View>(R.id.my_toolbar) as Toolbar?)
 
-        name = findViewById(R.id.name)
-        lastName = findViewById(R.id.lastName)
-        employeeNumber = findViewById(R.id.employeeNumber)
+        // Displays the name of the currently signed in employee in the GUI
+        name = "First Name: " + EmployeeData.name.toString()
+        lastName = "Last Name: " + EmployeeData.last_name.toString()
+        employeeNumber = "Employee No.: " + EmployeeData.employee_number.toString()
+
+        firstNameField.text = name
+        lastNameField.text = lastName
+        employeeNumberField.text = employeeNumber
 
     }
 
@@ -91,10 +99,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        @JvmField
-        var name: TextView? = null
-        var lastName: TextView? = null
-        var employeeNumber: TextView? = null
+        var name: String? = null
+        var lastName: String? = null
+        var employeeNumber: String? = null
         var toolBar: Toolbar? = null
     }
 }
